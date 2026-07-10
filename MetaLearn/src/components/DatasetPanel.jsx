@@ -131,10 +131,9 @@ function DatasetPanel({
 
     try {
       const endpoint =
-        selectedAlgorithm ===
-        "K-Means Clustering"
-          ? "http://127.0.0.1:8000/kmeans"
-          : "http://127.0.0.1:8000/train";
+  selectedAlgorithm === "K-Means Clustering"
+    ? "https://metalearn-visualizer.onrender.com/kmeans"
+    : "https://metalearn-visualizer.onrender.com/train";
 
       const response =
         await fetch(
