@@ -13,9 +13,18 @@ app = FastAPI()
 trained_model = None
 trained_columns = None
 
+# -------------------------------
+# CORS CONFIGURATION
+# -------------------------------
+
+origins = [
+    "http://localhost:5173",
+    "https://metalearn-visualizer.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
