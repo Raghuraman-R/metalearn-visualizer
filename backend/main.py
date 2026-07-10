@@ -145,10 +145,21 @@ async def train_kmeans(file: UploadFile = File(...)):
     # Read dataset
     df = pd.read_csv(file.file)
 
+    # Render free tier optimization
+    if len(df) > 1000:
+        df = df.sample(
+            n=1000,
+            random_state=42
+        )
+
     # Select numerical columns only
     numerical_df = df.select_dtypes(
         include=["int64", "float64"]
     )
+
+    # Limit number of numerical columns
+    if numerical_df.shape[1] > 15:
+        numerical_df = numerical_df.iloc[:, :15]
 
     # Fill missing values
     numerical_df = numerical_df.fillna(
@@ -174,26 +185,27 @@ async def train_kmeans(file: UploadFile = File(...)):
     )
 
     return {
-    "rows": len(df),
-    "columns": len(df.columns),
+        "rows": len(df),
+        "columns": len(df.columns),
 
-    "numerical_features":
-        list(numerical_df.columns),
+        "numerical_features":
+            list(numerical_df.columns),
 
-    "clusters": 3,
+        "clusters": 3,
 
-    "iterations":
-        int(kmeans.n_iter_),
+        "iterations":
+            int(kmeans.n_iter_),
 
-    "inertia":
-        float(kmeans.inertia_),
+        "inertia":
+            float(kmeans.inertia_),
 
-    "centroids":
-        kmeans.cluster_centers_.tolist(),
+        "centroids":
+            kmeans.cluster_centers_.tolist(),
 
-    "labels":
-        labels.tolist(),
+        # Limit response size
+        "labels":
+            labels[:1000].tolist(),
 
-    "points":
-        scaled_data.tolist()
-}
+        "points":
+            scaled_data[:1000].tolist()
+    }
