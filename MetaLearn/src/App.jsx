@@ -18,70 +18,72 @@ function App() {
   const [algorithm, setAlgorithm] =
     useState("Decision Tree");
 
-  const [trainingResult, setTrainingResult] = useState(null);
+  const [trainingResult, setTrainingResult] =
+    useState(null);
 
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
 
-      {/* Top Section */}
-      <div className="grid grid-cols-12 gap-4 p-4">
+      {/* ================= TOP SECTION ================= */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4">
 
         {/* Dataset Panel */}
-        <div className="col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           <DatasetPanel
-  setIsRunning={setIsRunning}
-  setAlgorithm={setAlgorithm}
-  setTrainingResult={setTrainingResult}
-/>
+            setIsRunning={setIsRunning}
+            setAlgorithm={setAlgorithm}
+            setTrainingResult={setTrainingResult}
+          />
         </div>
 
         {/* Visualization Panel */}
-        <div className="col-span-6">
+        <div className="col-span-1 lg:col-span-6">
           <VisualizationPanel
-  isRunning={isRunning}
-  currentStep={currentStep}
-  setCurrentStep={setCurrentStep}
-  algorithm={algorithm}
-  isPaused={isPaused}
-  setIsPaused={setIsPaused}
-  trainingResult={trainingResult}
-/>
+            isRunning={isRunning}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            algorithm={algorithm}
+            isPaused={isPaused}
+            setIsPaused={setIsPaused}
+            trainingResult={trainingResult}
+          />
         </div>
 
         {/* Analytics Panel */}
-        <div className="col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           <AnalyticsPanel
-  trainingResult={trainingResult}
-/>
+            trainingResult={trainingResult}
+          />
         </div>
 
       </div>
 
-      {/* Bottom Section */}
-      <div className="grid grid-cols-12 gap-4 p-4">
+      {/* ================= BOTTOM SECTION ================= */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4">
 
         {/* Timeline */}
-        <div className="col-span-8">
+        <div className="col-span-1 lg:col-span-8">
           <Timeline
             currentStep={currentStep}
           />
         </div>
 
         {/* Explanation Panel */}
-        <div className="col-span-2">
-  <ExplanationPanel
-  currentStep={currentStep}
-  trainingResult={trainingResult}
-/>
-</div>
+        <div className="col-span-1 lg:col-span-2">
+          <ExplanationPanel
+            currentStep={currentStep}
+            trainingResult={trainingResult}
+          />
+        </div>
 
-<div className="col-span-2">
-  <TrainingPanel
-    currentStep={currentStep}
-    algorithm={algorithm}
-  />
-</div>
+        {/* Training Calculations */}
+        <div className="col-span-1 lg:col-span-2">
+          <TrainingPanel
+            currentStep={currentStep}
+            algorithm={algorithm}
+          />
+        </div>
 
       </div>
     </div>
