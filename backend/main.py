@@ -57,7 +57,14 @@ async def train_model(file: UploadFile = File(...)):
     # Read CSV
     df = pd.read_csv(file.file)
 
-    # Remove empty rows
+    # Render free tier optimization
+    if len(df) > 5000:
+        df = df.sample(
+            n=5000,
+            random_state=42
+        )
+
+    # Remove completely empty rows
     df = df.dropna(how="all")
 
     # Last column becomes target
@@ -85,8 +92,13 @@ async def train_model(file: UploadFile = File(...)):
     # Convert to numeric
     X_encoded = X_encoded.astype(float)
 
+    # Render optimization for large one-hot encoded datasets
+    if X_encoded.shape[1] > 100:
+        X_encoded = X_encoded.iloc[:, :100]
+
     # Train Decision Tree
     model = DecisionTreeClassifier(
+        max_depth=5,
         random_state=42
     )
 
